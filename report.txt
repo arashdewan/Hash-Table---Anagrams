@@ -1,0 +1,69 @@
+======= CS32 P4 REPORT =======
+My implementation uses the data structure of a simple hash table that is able to insert and look up keys, which are strings in this situation, of the table. It is able to convert the strings into hash values to be inserted into its unique buckets, it also handles collisions when inserting by having a list data structure to manage that.
+
+for example:
+index   | buckets
+-------------------------
+1       | [dog]
+2       | [cat]->[tac]
+3       |
+4       | [diet]->[edit]->[tide]
+...     |
+...     | [gym]
+...     | [mat]
+...     | [class]
+500000  | [send]->[dens]
+
+======= PSEUDOCODE =======
+constructor
+{
+    sets number of buckets to the appropriate parameter given
+    repeatedely creates the appropriate number of buckets within the hash table and sets them to nullptr
+}
+
+destructor
+{
+    repeatedly deletes each bucket in the hash table until you reach the total buckets
+}
+
+maphash function
+{
+    //uses the fancy way of creating a hash value for your strings (include functional)
+    creates a template class of hash using type string,
+    and calls the overload operator function on that object to get a unique unsigned int,
+    and then modulus it by the number of buckets
+}
+
+insert function
+{
+    clean up word of non letters or capitals
+    sort the given word alphabetically
+    create a hash value for the sorted word
+    if the bucket of the hash value has values in the list,
+        push back the word to end of list and sort the list so that the code can handle collisions
+    if the bucket of the hash value is empty
+        create a new list and push the word to the front
+}
+
+lookup function
+{
+    clean up word of non letters or capitals
+    if function parameter is empty or there is ainvalid word
+        return from function
+    sort the given word alphabetically
+    create a hash value for the sorted word
+    if there is no bucket for that word
+        then return because it is not in the dictionary
+    otherwise
+        repeatedly iterate from the beginning of the bucket till the end of the bucket
+            checking to see if the current word in the list matches the word by comparing the sorted version of both
+            if there is a match
+                set callback function with the parameter of the current word
+}
+
+======= NOTABLE PROBLEMS =======
+1. dealing with the lookup function and getting it to properly compare letters with the words in the list was difficult until I realized I could use sort(), which made me go back and change my insert function as well.
+
+2. my words.txt file would not show up in the same directory so it kept saying the file was not found, so I have to use the absolute path to find it (e.g. /Users/arashdewan/Desktop/code/cs32p4/cs32p4)
+
+3. Whenever I would run my code, a pop up message would appear saying "The document "shared_ptr.h" could not be saved. You don't have permission" which I was extrememly confused about because I never touched the library of shared_ptr, but I just reset my entire macbook and it finally worked, so must of been something running on the side.
